@@ -52,22 +52,28 @@ function formatDataForDiscord(data) {
     for (let i = 1; i <= 4; i++) {
         message += `\n**Option ${i}:**\n`;
         if (data.ratings[i]) {
-            message += `• Clarity: ${data.ratings[i].clarity ? data.ratings[i].clarity[0] : 'N/A'} ⭐\n`;
-            message += `• Find Info: ${data.ratings[i].findinfo ? data.ratings[i].findinfo[0] : 'N/A'} ⭐\n`;
-            message += `• Visual Appeal: ${data.ratings[i].visual ? data.ratings[i].visual[0] : 'N/A'} ⭐\n`;
-            message += `• Usefulness: ${data.ratings[i].usefulness ? data.ratings[i].usefulness[0] : 'N/A'} ⭐\n`;
+            message += `• Clarity: ${data.ratings[i].clarity && data.ratings[i].clarity.length > 0 ? data.ratings[i].clarity[0] : 'N/A'} ⭐\n`;
+            message += `• Find Info: ${data.ratings[i].findinfo && data.ratings[i].findinfo.length > 0 ? data.ratings[i].findinfo[0] : 'N/A'} ⭐\n`;
+            message += `• Visual Appeal: ${data.ratings[i].visual && data.ratings[i].visual.length > 0 ? data.ratings[i].visual[0] : 'N/A'} ⭐\n`;
+            message += `• Usefulness: ${data.ratings[i].usefulness && data.ratings[i].usefulness.length > 0 ? data.ratings[i].usefulness[0] : 'N/A'} ⭐\n`;
         }
     }
     
     // Feedback
     message += "\n**FEEDBACK:**\n";
+    let hasFeedback = false;
     for (let i = 1; i <= 4; i++) {
         if (data.feedback[i] && data.feedback[i].length > 0) {
+            hasFeedback = true;
             message += `\n**Option ${i}:**\n`;
             data.feedback[i].forEach((fb, index) => {
                 message += `${index + 1}. ${fb}\n`;
             });
         }
+    }
+    
+    if (!hasFeedback) {
+        message += "No feedback provided.\n";
     }
     
     message += `\n**Submitted:** ${new Date().toLocaleString()}`;
@@ -119,10 +125,7 @@ document.querySelectorAll('.vote-btn').forEach(btn =>
     
 function updateUI() 
 { 
-    document.querySelectorAll('.star').forEach(star => {
-        star.classList.remove('active');
-    });
-    
+   
     for (let i = 1; i <= 4; i++) 
     { 
         document.querySelector(`.vote-count[data-option="${i}"]`).textContent = `Votes: ${data.votes[i]}`;
