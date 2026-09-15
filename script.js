@@ -28,6 +28,16 @@ function sendToDiscord(data) {
         body: JSON.stringify({ content: message })
     }).then(() => {
         alert('Feedback submitted! Thank you!');
+        
+        // Reset feedback in data NA het versturen
+        data.feedback = { 1: [], 2: [], 3: [], 4: [] };
+        data.ratings = { 1: { clarity: [], findinfo: [], visual: [], usefulness: [] }, 
+                         2: { clarity: [], findinfo: [], visual: [], usefulness: [] },
+                         3: { clarity: [], findinfo: [], visual: [], usefulness: [] },
+                         4: { clarity: [], findinfo: [], visual: [], usefulness: [] } };
+        saveData(data);
+        
+        // Reset alleen de feedback textareas
         document.querySelectorAll('.feedback-text').forEach(textarea => {
             textarea.value = '';
         });
