@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Operations Kiosk - Feedback</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div id="imageModal" class="modal">
+        <span class="close">×</span>
+        <img class="modal-content" id="modalImage">
+        <div id="caption"></div>
+    </div>
+    <div class="container">
+        <header>
+            <h1>Global Operations Kiosk</h1>
+            <p>Which visualisation do you prefer?</p>
+        </header>
+        <div class="options-grid">
+            <div class="option-card">
+                <h2>Option 1: Focus on Dynamics</h2>
+                <div class="screenshots-container">
+                    <img src="screenshots/Option 1.1.png" alt="Option 1.1">
+                    <img src="screenshots/Option 1.2.png" alt="Option 1.2">
+                    <img src="screenshots/Option 1.3.png" alt="Option 1.3">
+                </div>
+                <div class="description">
+                    <p>Dark background (very dark blue) with subtle glowing continent outlines. Animated dots represent customer locations. Colors indicate status: Siemens blue (active, 09:00-17:00), light blue/gray (closed), yellow (national holiday), red (critical). Privacy toggle: public mode hides client names; internal mode shows customer names, city, local time, and additional details.</p>  
+                </div>
+                
+                <div class="feedback-form" data-option="1">
+                    <div class="question">
+                        <label>How clear and organized is this design?</label>
+                        <div class="rating-stars" data-question="clarity" data-option="1">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>How quickly can you find the information you need?</label>
+                        <div class="rating-stars" data-question="findinfo" data-option="1">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>How visually appealing do you find this design?</label>
+                        <div class="rating-stars" data-question="visual" data-option="1">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>Would you like to see this in the actual system?</label>
+                        <div class="rating-stars" data-question="usefulness" data-option="1">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>What would you like to change or add?</label>
+                        <textarea class="feedback-text" data-option="1" placeholder="Your feedback here..."></textarea>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="save-btn" data-option="1">Save Feedback</button>
+                    <button class="vote-btn" data-option="1">Vote for Option 1</button>
+                    <button class="undo-btn" data-option="1">Undo Vote</button>
+                </div>
+                <div class="vote-count" data-option="1">Votes: 0</div>
+            </div>
+
+            <div class="option-card">
+                <h2>Option 2: Focus on Information</h2>
+                <div class="screenshots-container">
+                    <img src="screenshots/Option 2.1.png" alt="Option 2.1">
+                    <img src="screenshots/Option 2.2.png" alt="Option 2.2">
+                    <img src="screenshots/Option 2.3.png" alt="Option 2.3">
+                </div>
+                <div class="description">
+                    <p>Dark blue background with detailed map (borders, cities, water) in muted colors. Dots represent locations with hover-activated info bubbles showing local time, status, temperature, and other information. Status icons (sun for daytime, moon for night, coffee cup for break, holiday symbol, warning icon) provide quick visual feedback. Privacy toggle: public mode shows only basic info; internal mode displays client names, contacts, open tickets, and system status.</p>  
+                </div>
+                
+                <div class="feedback-form" data-option="2">
+                    <div class="question">
+                        <label>How clear and organized is this design?</label>
+                        <div class="rating-stars" data-question="clarity" data-option="2">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>How quickly can you find the information you need?</label>
+                        <div class="rating-stars" data-question="findinfo" data-option="2">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>How visually appealing do you find this design?</label>
+                        <div class="rating-stars" data-question="visual" data-option="2">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>Would you like to see this in the actual system?</label>
+                        <div class="rating-stars" data-question="usefulness" data-option="2">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>What would you like to change or add?</label>
+                        <textarea class="feedback-text" data-option="2" placeholder="Your feedback here..."></textarea>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="save-btn" data-option="2">Save Feedback</button>
+                    <button class="vote-btn" data-option="2">Vote for Option 2</button>
+                    <button class="undo-btn" data-option="2">Undo Vote</button>
+                </div>
+                <div class="vote-count" data-option="2">Votes: 0</div>
+            </div>
+
+            <div class="option-card">
+                <h2>Option 3: Focus on Context</h2>
+                <div class="screenshots-container">
+                    <img src="screenshots/Option 3.1.png" alt="Option 3.1">
+                    <img src="screenshots/Option 3.2.png" alt="Option 3.2">
+                    <img src="screenshots/Option 3.3.png" alt="Option 3.3">
+                </div>
+                <div class="description">
+                    <p>Large central map with side panels and ticker-tape at the bottom. Left panel shows priority list of locations needing attention (critical status, near closing time, open tickets). Right panel displays global statistics (active locations, holidays today, critical alerts, response time) and upcoming events. Map auto-zooms on important events. Ticker-tape shows live updates like holidays, shift changes, and alerts. Privacy toggle: public mode hides client names and sensitive data; internal mode shows detailed information and specific alerts.</p>  
+                </div>
+                
+                <div class="feedback-form" data-option="3">
+                    <div class="question">
+                        <label>How clear and organized is this design?</label>
+                        <div class="rating-stars" data-question="clarity" data-option="3">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>How quickly can you find the information you need?</label>
+                        <div class="rating-stars" data-question="findinfo" data-option="3">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>How visually appealing do you find this design?</label>
+                        <div class="rating-stars" data-question="visual" data-option="3">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>Would you like to see this in the actual system?</label>
+                        <div class="rating-stars" data-question="usefulness" data-option="3">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>What would you like to change or add?</label>
+                        <textarea class="feedback-text" data-option="3" placeholder="Your feedback here..."></textarea>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="save-btn" data-option="3">Save Feedback</button>
+                    <button class="vote-btn" data-option="3">Vote for Option 3</button>
+                    <button class="undo-btn" data-option="3">Undo Vote</button>
+                </div>
+                <div class="vote-count" data-option="3">Votes: 0</div>
+            </div>
+
+            <div class="option-card">
+                <h2>Option 4: Focus on Immersion</h2>
+                <div class="screenshots-container">
+                    <img src="screenshots/Option 4.1.png" alt="Option 4.1">
+                    <img src="screenshots/Option 4.2.png" alt="Option 4.2">
+                    <img src="screenshots/Option 4.3.png" alt="Option 4.3">
+                </div>
+                <div class="description">
+                    <p>3D rotating globe with detailed world map. Markers are glowing spheres or pyramids with colors indicating status (green: open and good, orange: open but near closing, blue: closed, yellow: holiday, red: critical). Marker height indicates urgency. Real-time day/night effect shows which side of Earth is in sunlight. Interactive rotation allows manual control with mouse. Info popups appear on hover showing client name, local time, status, and alerts. Ticker-tape displays live updates. Privacy toggle: public mode hides client names; internal mode shows detailed information.</p>  
+                </div>
+                
+                <div class="feedback-form" data-option="4">
+                    <div class="question">
+                        <label>How clear and organized is this design?</label>
+                        <div class="rating-stars" data-question="clarity" data-option="4">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>How quickly can you find the information you need?</label>
+                        <div class="rating-stars" data-question="findinfo" data-option="4">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>How visually appealing do you find this design?</label>
+                        <div class="rating-stars" data-question="visual" data-option="4">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>Would you like to see this in the actual system?</label>
+                        <div class="rating-stars" data-question="usefulness" data-option="4">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>What would you like to change or add?</label>
+                        <textarea class="feedback-text" data-option="4" placeholder="Your feedback here..."></textarea>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="save-btn" data-option="4">Save Feedback</button>
+                    <button class="vote-btn" data-option="4">Vote for Option 4</button>
+                    <button class="undo-btn" data-option="4">Undo Vote</button>
+                </div>
+                <div class="vote-count" data-option="4">Votes: 0</div>
+            </div>
+        </div>
+
+        <div class="results-section">
+            <h2>Live Results</h2>
+            <canvas id="votesChart"></canvas>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
