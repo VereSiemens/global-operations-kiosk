@@ -28,8 +28,14 @@ function sendToDiscord(data) {
         body: JSON.stringify({ content: message })
     }).then(() => {
         alert('Feedback submitted! Thank you!');
-        localStorage.removeItem(DATA_KEY);
-        location.reload();
+        document.querySelectorAll('.feedback-text').forEach(textarea => {
+            textarea.value = '';
+        });
+        
+        // Reset de sterren
+        document.querySelectorAll('.star').forEach(star => {
+            star.classList.remove('active');
+        });
     }).catch(error => {
         console.error('Error:', error);
         alert('Error submitting feedback. Please try again.');
@@ -58,6 +64,8 @@ function formatDataForDiscord(data) {
             message += `• Find Info: ${findinfo} ⭐\n`;
             message += `• Visual Appeal: ${visual} ⭐\n`;
             message += `• Usefulness: ${usefulness} ⭐\n`;
+        } else {
+            message += `• No ratings provided\n`;
         }
     }
     
