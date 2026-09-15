@@ -1,9 +1,10 @@
-const DATA_KEY = 'kiosk-feedback'; //De naam waaronder de data wordt opgeslagen
+const DATA_KEY = 'kiosk-feedback';
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1kLd57v4wqk_2Oh7pzhdeT2tgvdU2hGbkCaf0Uryethcac_0l6R9Kh2fCV9H63L7i/exec";
 
 function loadData() 
-{ //Laadt de opgeslagen gegevens wanneer de pagina wordt geopend
-    const stored = localStorage.getItem(DATA_KEY); //Haalt data op die eerder is opgeslagen
-    return stored ? JSON.parse(stored) : { //Als er data is opgeslagen wordt het omgezet van tekst naar object, anders wordt er een nieuw leeg opbject aangemaakt
+{ 
+    const stored = localStorage.getItem(DATA_KEY);
+    return stored ? JSON.parse(stored) : {
         votes: { 1: 0, 2: 0, 3: 0, 4: 0},
         feedback: { 1: [], 2: [], 3: [], 4: []},
         ratings: { 1: { clarity: [], findinfo: [], visual: [], usefulness: [] }, 
@@ -14,94 +15,119 @@ function loadData()
 }
 
 function saveData(data) 
-{ //Slaat data op in localStorage
-    localStorage.setItem(DATA_KEY, JSON.stringify(data)); //Zet het object om in tekst zodat het kan worden opgeslagen
+{ 
+    localStorage.setItem(DATA_KEY, JSON.stringify(data));
 }
 
-let data = loadData(); //Laad de opgeslagen data of start met lege data
+function sendToGoogleSheets(option, type, value) {
+    const payload = {
+        option: option,
+        type: type,
+        value: value
+    };
+    
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+    }).catch(error => console.log('Data sent to Google Sheets'));
+}
+
+let data = loadData();
 
 document.querySelectorAll('.save-btn').forEach(btn =>
 {
     btn.addEventListener('click', function()
     {
-        const option = this.dataset.option; //Haalt de data-option waarde op
-        const feedbackText = document.querySelector(`.feedback-text[data-option="${option}"]`).value; //Vindt de tekstbox voor deze optie en haalt de tekst op
+        const option = this.dataset.option;
+        const feedbackElement = document.querySelector(`.feedback-text[data-option="${option}"]`);
+        if (!feedbackElement) return;
+        
+        const feedbackText = feedbackElement.value;
+        
         if (feedbackText.trim())
         {
-            data.feedback[option].push(feedbackText); //Voegt de feedback toe aan de lijst
-            document.querySelector(`.feedback-text[data-option="${option}"]`).value = ''; //Leegt de tekstbox
-            saveData(data); //Sla de gewijzigde data op
+            data.feedback[option].push(feedbackText);
+            feedbackElement.value = '';
+            saveData(data);
+            sendToGoogleSheets(option, 'feedback', feedbackText);
         }
     });
 });
 
 document.querySelectorAll('.vote-btn').forEach(btn => 
-{ //Vindt alle elementen met class="vote-btn", forEach = voor elk van deze buttons doe het volgende: 
+{ 
     btn.addEventListener('click', function() 
-    { //Luister naar klikken op deze knop, function() is wat er gebeurt als iemand klikt
-        const option = this.dataset.option; //Haalt de data-option waarde op
-        data.votes[option]++; //Verhoogt het aantal stemmen voor deze optie met 1
-        const feedbackText = document.querySelector(`.feedback-text[data-option="${option}"]`).value; //Vindt de tekstbox voor deze optie en haalt de tekst op
-        if (feedbackText.trim()) 
-        { //Als er tekst is (zonder spaties)
-            data.feedback[option].push(feedbackText); //Voegt de feedback toe aan de lijst
+    { 
+        const option = this.dataset.option;
+        data.votes[option]++;
+        
+        const feedbackElement = document.querySelector(`.feedback-text[data-option="${option}"]`);
+        if (feedbackElement) {
+            const feedbackText = feedbackElement.value;
+            if (feedbackText.trim()) 
+            {
+                data.feedback[option].push(feedbackText);
+            }
         }
-        saveData(data); //Sla de gewijzigde data op
-        updateUI(); //Update het scherm zodat de veranderingen zichtbaar zijn
+        
+        saveData(data);
+        updateUI();
+        sendToGoogleSheets(option, 'vote', 1);
     });
 });
     
 function updateUI() 
-{ //Update alle zichtbare elementen
-        document.querySelectorAll('.star').forEach(star => {
+{ 
+    document.querySelectorAll('.star').forEach(star => {
         star.classList.remove('active');
     });
+    
     for (let i = 1; i <= 4; i++) 
-    { //Update de stemmen-tellers, wordt 4 keer herhaalt
-        document.querySelector(`.vote-count[data-option="${i}"]`).textContent = `Votes: ${data.votes[i]}`; //Zoek het element met data-option='i' en zet de tekst op "Votes: X", ${data.votes[i]} betekent: vul hier het aantal stemmen in 
+    { 
+        document.querySelector(`.vote-count[data-option="${i}"]`).textContent = `Votes: ${data.votes[i]}`;
     }
-    updateChart(); //update de grafiek
+    updateChart();
 }
 
-let chart = null; //chart is een variabele die de grafiek opslaat. Start op null
+let chart = null;
 
-function updateChart() //Maakt of update de grafiek
+function updateChart()
 {
-    const ctx = document.getElementById('votesChart').getContext('2d'); //Vindt de <canvas> element, wordt 2D getekend
+    const ctx = document.getElementById('votesChart').getContext('2d');
     if (chart) 
     {
         chart.destroy();
     }
     chart = new Chart(ctx, 
         {
-            type: 'bar', //Staafdiagram
+            type: 'bar',
 
             data: 
             {
                 labels: ['Option 1: Dynamics', 'Option 2: Information', 'Option 3: Context', 'Option 4: Immersion'],
                 datasets: [
                     {
-                        label: 'Votes', //Wat in de legenda staat
+                        label: 'Votes',
                         data: [data.votes[1], data.votes[2], data.votes[3], data.votes[4]],
-                        backgroundColor: ['#0082c0', '#00a4ef', '#5cb3ff', '#b3d9ff'] //Kleuren zijn de kleuren van de staven
+                        backgroundColor: ['#0082c0', '#00a4ef', '#5cb3ff', '#b3d9ff']
                     }
                 ]
             },
             options: 
             {
-                responsive: true, //Pas aan aan het schermformaat
+                responsive: true,
                 plugins: 
                 {
                     legend:
                     {
-                        display: false //Toont de legenda niet 
+                        display: false
                     }
                 },
                 scales: 
                 {
                     y:
                     {
-                        beginAtZero: true //Start de y-as op 0
+                        beginAtZero: true
                     }
                 }
             }
@@ -130,8 +156,10 @@ document.querySelectorAll('.star').forEach(star =>
         if (!data.ratings[option][question]) {
             data.ratings[option][question] = [];
         }
-        data.ratings[option][question].push(rating); // Voeg toe in plaats van overschrijven
+        data.ratings[option][question].push(rating);
         saveData(data);
+        sendToGoogleSheets(option, 'rating_' + question, rating);
+        
         starsContainer.querySelectorAll('.star').forEach(s => 
         {
             if (s.getAttribute('data-value') <= rating) {
@@ -148,29 +176,29 @@ document.addEventListener('DOMContentLoaded', function()
     updateUI();
 });
 
-const modal = document.getElementById("imageModal"); //Haalt de modal element op
-const modalImg = document.getElementById("modalImage"); //Haalt de foto in de modal op
-const closeBtn = document.querySelector(".close"); //Haalt de sluitknop op
+const modal = document.getElementById("imageModal");
+const modalImg = document.getElementById("modalImage");
+const closeBtn = document.querySelector(".close");
 
-document.querySelectorAll('.screenshots-container img').forEach(img => //Voor elke foto in .screenshots-container
+document.querySelectorAll('.screenshots-container img').forEach(img =>
 {
-    img.addEventListener('click', function() //Wanneer iemand op een foto klikt
+    img.addEventListener('click', function()
     {
-        modal.style.display = "block"; //Toont de modal
-        modalImg.src = this.src; //Zet de geklikte foto in de modal
+        modal.style.display = "block";
+        modalImg.src = this.src;
     });
 });
 
-closeBtn.addEventListener('click', function() //Wanneer iemand op de sluitknop klikt
+closeBtn.addEventListener('click', function()
 {
-    modal.style.display = "none"; //Verbergt de modal
+    modal.style.display = "none";
 });
 
-window.addEventListener('click', function(event) //Wanneer iemand ergens op het scherm klikt
+window.addEventListener('click', function(event)
 {
-    if (event.target == modal) //Als ze op achtergrond van de modal klikken (niet op de foto of de sluitknop)
+    if (event.target == modal)
     {
-        modal.style.display = "none"; //Verbergt de modal
+        modal.style.display = "none";
     }
 });
 
@@ -178,12 +206,13 @@ document.querySelectorAll('.undo-btn').forEach(btn =>
 {
     btn.addEventListener('click', function()
     {
-        const option = this.dataset.option; //Haalt de data-option waarde op
+        const option = this.dataset.option;
         if (data.votes[option] > 0)
         {
-            data.votes[option]--; //Verlaagt het aantal stemmen voor deze optie met 1
-            saveData(data); //Sla de gewijzigde data op
-            updateUI(); //Update het scherm zodat de veranderingen zichtbaar zijn
+            data.votes[option]--;
+            saveData(data);
+            updateUI();
+            sendToGoogleSheets(option, 'undo_vote', 1);
         }
     });
 });
