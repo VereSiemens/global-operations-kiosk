@@ -28,7 +28,6 @@ function sendToDiscord(data) {
         body: JSON.stringify({ content: message })
     }).then(() => {
         alert('Feedback submitted! Thank you!');
-        // Reset alles na submit
         localStorage.removeItem(DATA_KEY);
         location.reload();
     }).catch(error => {
@@ -40,26 +39,28 @@ function sendToDiscord(data) {
 function formatDataForDiscord(data) {
     let message = "📊 **NEW FEEDBACK SUBMISSION**\n\n";
     
-    // Votes
     message += "**VOTES:**\n";
     message += `• Option 1: ${data.votes[1]} votes\n`;
     message += `• Option 2: ${data.votes[2]} votes\n`;
     message += `• Option 3: ${data.votes[3]} votes\n`;
     message += `• Option 4: ${data.votes[4]} votes\n\n`;
     
-    // Ratings
     message += "**RATINGS:**\n";
     for (let i = 1; i <= 4; i++) {
         message += `\n**Option ${i}:**\n`;
         if (data.ratings[i]) {
-            message += `• Clarity: ${data.ratings[i].clarity && data.ratings[i].clarity.length > 0 ? data.ratings[i].clarity[0] : 'N/A'} ⭐\n`;
-            message += `• Find Info: ${data.ratings[i].findinfo && data.ratings[i].findinfo.length > 0 ? data.ratings[i].findinfo[0] : 'N/A'} ⭐\n`;
-            message += `• Visual Appeal: ${data.ratings[i].visual && data.ratings[i].visual.length > 0 ? data.ratings[i].visual[0] : 'N/A'} ⭐\n`;
-            message += `• Usefulness: ${data.ratings[i].usefulness && data.ratings[i].usefulness.length > 0 ? data.ratings[i].usefulness[0] : 'N/A'} ⭐\n`;
+            const clarity = data.ratings[i].clarity && data.ratings[i].clarity.length > 0 ? data.ratings[i].clarity[0] : 'N/A';
+            const findinfo = data.ratings[i].findinfo && data.ratings[i].findinfo.length > 0 ? data.ratings[i].findinfo[0] : 'N/A';
+            const visual = data.ratings[i].visual && data.ratings[i].visual.length > 0 ? data.ratings[i].visual[0] : 'N/A';
+            const usefulness = data.ratings[i].usefulness && data.ratings[i].usefulness.length > 0 ? data.ratings[i].usefulness[0] : 'N/A';
+            
+            message += `• Clarity: ${clarity} ⭐\n`;
+            message += `• Find Info: ${findinfo} ⭐\n`;
+            message += `• Visual Appeal: ${visual} ⭐\n`;
+            message += `• Usefulness: ${usefulness} ⭐\n`;
         }
     }
     
-    // Feedback
     message += "\n**FEEDBACK:**\n";
     let hasFeedback = false;
     for (let i = 1; i <= 4; i++) {
@@ -82,25 +83,6 @@ function formatDataForDiscord(data) {
 }
 
 let data = loadData();
-
-document.querySelectorAll('.save-btn').forEach(btn =>
-{
-    btn.addEventListener('click', function()
-    {
-        const option = this.dataset.option;
-        const feedbackElement = document.querySelector(`.feedback-text[data-option="${option}"]`);
-        if (!feedbackElement) return;
-        
-        const feedbackText = feedbackElement.value;
-        
-        if (feedbackText.trim())
-        {
-            data.feedback[option].push(feedbackText);
-            feedbackElement.value = '';
-            saveData(data);
-        }
-    });
-});
 
 document.querySelectorAll('.vote-btn').forEach(btn => 
 { 
@@ -125,7 +107,6 @@ document.querySelectorAll('.vote-btn').forEach(btn =>
     
 function updateUI() 
 { 
-   
     for (let i = 1; i <= 4; i++) 
     { 
         document.querySelector(`.vote-count[data-option="${i}"]`).textContent = `Votes: ${data.votes[i]}`;
@@ -218,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function()
 {
     updateUI();
     
-    // SUBMIT BUTTON
     const resultsSection = document.querySelector('.results-section');
     const submitBtn = document.createElement('button');
     submitBtn.textContent = 'Save & Submit Feedback';

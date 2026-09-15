@@ -1,72 +1,72 @@
-*{ /*Dit geldt voor alle elementen op de pagina */
+*{ 
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body { /*body is de hele pagina */
+body { 
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f5f5f5;
     color: #333;
 }
 
-.container { /*container is het grootste doosje waar alles inzit */
+.container { 
     max-width: 1400px;
-    margin: 0 auto; /* centreert het */
-    padding: 20px; /*20 pixels ruimte binnen het doosje aan alle kanten */
+    margin: 0 auto;
+    padding: 20px;
 }
 
-header { /*bovenkant met titel */
-    text-align: center; /*Alle tekst in de header wordt gecentreerd */
-    margin-bottom: 40px; /*40 pixels ruimte onder de header */
-    background: linear-gradient(135deg, #0082c9 0%, #005a69 100%); /*Dit is een kleurenovergang, start met Siemens-blauw, eindigt met donkerder blauw, 135deg is de hoek */
+header { 
+    text-align: center;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #0082c9 0%, #005a69 100%);
     color: white;
-    padding: 30px; /*30 pixels ruimte binnen de header aan alle kanten */
-    border-radius: 8px; /*Maakte de hoeken licht afgerond */
+    padding: 30px;
+    border-radius: 8px;
 }
 
-header h1 { /*Grote titel in de header */
-    font-size: 2.5em; /*em betekent relatief aan de normale grootte: 2.5em = 2.5x zo groot als normaal */
+header h1 { 
+    font-size: 2.5em;
     margin-bottom: 10px;
 }
 
 header p{
     font-size: 1.1em;
-    opacity: 0.9; /*Bepaalt hoe doorzichtig iets is */
+    opacity: 0.9;
 }
 
-.options-grid { /*Doosje met alle 4 de opties */
-    display: grid; /*Zorgt ervoor dat dit een raster-layout is (rijen en kolommen) */
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); /*Maak zoveel kolommen als passen, maar elke minimaal 450px breed. 1fr = 1 fractie (gelijk verdeeld) */
-    gap: 30px; /*30 pixels ruimte tussen de items in het raster */
+.options-grid { 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 30px;
     margin-bottom: 50px;
 }
 
-.option-card { /*1 kaartje voor option 1, 2, 3 of 4 */
+.option-card { 
     background: white;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /*Maakt een schaduw. 0 = geen horizontale verschuiving, 2px = 2 pixels verticaal, 8px = hoe vaag de schaduw is, rgba(0,0,0,0.1) = zwarte schaduw met 10% zichtbaarheid */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.option-card h2 { /*Titel in het kaartje */
+.option-card h2 { 
     color: #0082c9;
     margin-bottom: 15px;
 }
 
-.screenshots-container { /*Doosje bevat 3 screenshots */
-    display: flex; /*Maakt dit een flexbox (items staan naast elkaar) */
+.screenshots-container { 
+    display: flex;
     gap: 10px;
     margin-bottom: 15px;
-    overflow-x: auto; /*Als de screenshots niet passsen kun je horizontaal scrollen */
+    overflow-x: auto;
 }
 
-.screenshots-container img { /*Elke screenshot in het doosje */
+.screenshots-container img { 
     width: 100%;
     height: 200px;
-    object-fit: cover; /*Zorgt dat afbeelding hele doosje vult, zonder vervormd te worden */
+    object-fit: cover;
     border-radius: 6px;
-    flex-shrink: 0; /*Maak afbeelding kleiner als niet past */
+    flex-shrink: 0;
 }
 
 .description {
@@ -77,51 +77,29 @@ header p{
     border-radius: 4px;
 }
 
-.description p { /*Tekst in de beschrijving */
-    line-height: 1.6; /*Ruimte tussen de tekstregels */
+.description p { 
+    line-height: 1.6;
     font-size: 0.95em;
 }
 
-.feedback-text { /*Textbox waar mensen feedback typen */
+.feedback-text { 
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-family: inherit;
     font-size: 0.9em;
-    min-height: 80px; /*Zodat je meerdere regels kunt typen */
+    min-height: 80px;
     margin-bottom: 10px;
 }
 
-.feedback-text:focus { /* focus betekent wanneer iemand in deze teksbox klikt */
+.feedback-text:focus { 
     outline: none;
     border-color: #0082c9;
-    box-shadow: 0 0 0 3px rgba(0,130,201,0.1); /*subtiele blauwe gloed rond tekstbox */
+    box-shadow: 0 0 0 3px rgba(0,130,201,0.1);
 }
 
-.vote-btn { /*Vote knop */
-    width: 100%;
-    padding: 12px;
-    background: #0082c9;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1em;
-    font-weight: bold;
-    cursor: pointer; /*Cursor verandert in handpictogram als je erover beweegt */
-    transition: background 0.2s; /*Zorgt dat kleurveranderingen smooth gaan */
-    margin-bottom: 10px;
-}
-
-.vote-btn:hover {
-    background: #005a96;
-}
-
-.vote-btn:active { /*Wanneer iemand op knop klikt */
-    transform: scale(0.98); /*Knop wordt 2% kleiner als je erop klikt */
-}
-
-.vote-count { /*Doosje toont hoeveel stemmen */
+.vote-count { 
     text-align: center;
     font-size: 0.9em;
     color: #666;
@@ -130,49 +108,45 @@ header p{
     border-radius: 4px;
 }
 
-.results-section { /*Doosje met de resultaten onderaan */
+.results-section { 
     background: white;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.results-section h2 { /*Titel in de resultaten */
+.results-section h2 { 
     color: #0082c9;
     margin-bottom: 20px;
 }
 
-#votesChart { /*Grafiek */
+#votesChart { 
     max-width: 600px;
     margin: 0 auto;
 }
 
-.modal { /*Popup die verschijnt als je op een foto klikt */
-    display: none; /*Verberg het modaal venster standaard */
-    position: fixed; /*Zorgt dat het venster op dezelfde plek blijft als je scrolt */
-    z-index: 1000; /*Zorgt dat het boven andere elementen staat */
+.modal { 
+    display: none;
+    position: fixed;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /*Als inhoud groter is dan scherm, kun je scrollen */
-    background-color: rgba(0,0,0,0.8); /*Donkere achtergrond met 80% zichtbaarheid */
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
 }
 
 .modal-content {
-    /* Dit is de vergrote foto */
     margin: auto;
     display: block;
     max-width: 100vw;
-    /* 100% van de schermbreedtte */
     max-height: 90vh;
-    /* 90% van de schermhoogte */
     padding-top: 20px;
     object-fit: contain;
-    /* Zorgt dat de hele foto zichtbaar is zonder uit te rekken */
 }
 
-.close { /*Kruisje om popup te sluiten */
+.close { 
     position: absolute;
     top: 20px;
     right: 35px;
@@ -183,12 +157,12 @@ header p{
     cursor: pointer;
 }
 
-.close:hover, /*Wanneer je erover heen beweegt */
-.close:focus { /*Waneer het geselecteerd is */
+.close:hover, 
+.close:focus { 
     color: #bbb;
 }
 
-#caption { /* Ondertitel van de foto */
+#caption { 
     margin: auto;
     display: block;
     width: 80%;
@@ -198,30 +172,10 @@ header p{
     padding: 10px 0;
 } 
 
-.button-group { /*Doosje met de 3 knoppen: Save, Vote, Undo */
-    display: flex; /*Knoppen staan naast elkaar */
+.button-group { 
+    display: flex;
     gap: 10px;
     margin-bottom: 10px;
-}
-
-.save-btn { /*Knop om feedback op te slaan */
-    flex: 1; /*Knop vult evenveel ruimte als de andere knoppen */
-    padding: 10px;
-    background: #00a4ef; 
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.save-btn:hover {
-    background: #007bb5;
-}
-
-.save-btn:active {
-    transform: scale(0.98);
 }
 
 .vote-btn {
@@ -235,7 +189,6 @@ header p{
     font-weight: bold;
     cursor: pointer;
     transition: background 0.2s;
-    margin-bottom: 0; /*Verwijderde de extra ruimte onder de knop */
 }
 
 .vote-btn:hover {
@@ -246,7 +199,7 @@ header p{
     transform: scale(0.98);
 }
 
-.undo-btn { /*Knop om stem ongedaan te maken */
+.undo-btn { 
     flex: 1;
     padding: 10px;
     background: #e74c3c; 
@@ -267,10 +220,10 @@ header p{
     transform: scale(0.98);
 }
 
-.undo-btn:disabled { /*Wanneer de knop niet beschikbaar is */
+.undo-btn:disabled { 
     background: #ccc;
-    cursor: not-allowed; /*Cursor verandert in een verbodsteken */
-    opacity: 0.6; /*Maakt de knop doorzichtig zodat het duidelijk is dat hij niet beschikbaar is */
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 .feedback-form {
@@ -304,65 +257,20 @@ header p{
     cursor: pointer;
     color: #ddd;
     transition: color 0.2s;
-    user-select: none; /*Voorkomt dat de sterretjes geselecteerd worden bij klikken */
+    user-select: none;
 }
 
 .star:hover {
-    color: #ffcc00; /*Gele kleur bij hover */
+    color: #ffcc00;
 }
 
 .star.active {
-    color: #0082c9; /*Siemens-blauw als geselecteerd */
+    color: #0082c9;
 }
 
-.notification {
-    /* Dit is de notification pop-up */
-    position: fixed;
-    /* Blijft op dezelfde plek, ook als je scrollt */
-    top: 20px;
-    /* 20 pixels van de bovenkant */
-    right: 20px;
-    /* 20 pixels van de rechterkant */
-    padding: 15px 20px;
-    border-radius: 4px;
-    color: white;
-    font-weight: bold;
-    z-index: 2000;
-    /* Zit bovenop alles */
-    animation: slideIn 0.3s ease-in-out;
-    /* Animatie wanneer het verschijnt */
-}
-.notification-success {
-    /* Dit is een success-notification (groen) */
-    background: #4caf50;
-    /* Groen */
-}
-.notification-error {
-    /* Dit is een error-notification (rood) */
-    background: #ff6b6b;
-    /* Rood */
-}
-@keyframes slideIn {
-    /* Dit is de animatie */
-    from {
-        /* Begint hier */
-        transform: translateX(400px);
-        /* 400 pixels naar rechts */
-        opacity: 0;
-        /* Onzichtbaar */
-    }
-    to {
-        /* Eindigt hier */
-        transform: translateX(0);
-        /* Op de goede plek */
-        opacity: 1;
-        /* Zichtbaar */
-    }
-}
-
-@media (max-width: 768px) { /*Geldt alleen op kleinere schermen (telefoon/tablet) */
+@media (max-width: 768px) { 
     .options-grid {
-        grid-template-columns: 1fr; /*Maar 1 kolum, items staan onder elkaar) */
+        grid-template-columns: 1fr;
     }
     header h1 {
         font-size: 1.8em;
