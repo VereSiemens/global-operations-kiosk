@@ -1,5 +1,5 @@
 const DATA_KEY = 'kiosk-feedback';
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1kLd57v4wqk_2Oh7pzhdeT2tgvdU2hGbkCaf0Uryethcac_0l6R9Kh2fCV9H63L7i/exec";
+const EMAIL_FORM_URL = "https://www.emailmeform.com/builder/form/7la04fkb54a3dwIcUdivA4";
 
 function loadData() 
 { 
@@ -19,17 +19,9 @@ function saveData(data)
     localStorage.setItem(DATA_KEY, JSON.stringify(data));
 }
 
-function sendToGoogleSheets(option, type, value) {
-    const payload = {
-        option: option,
-        type: type,
-        value: value
-    };
-    
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify(payload)
-    }).catch(error => console.log('Data sent to Google Sheets'));
+function sendToEmail(option, type, value) {
+    const message = `Option: ${option}, Type: ${type}, Value: ${value}`;
+    console.log('Sending to email:', message);
 }
 
 let data = loadData();
@@ -49,7 +41,7 @@ document.querySelectorAll('.save-btn').forEach(btn =>
             data.feedback[option].push(feedbackText);
             feedbackElement.value = '';
             saveData(data);
-            sendToGoogleSheets(option, 'feedback', feedbackText);
+            sendToEmail(option, 'feedback', feedbackText);
         }
     });
 });
@@ -72,7 +64,7 @@ document.querySelectorAll('.vote-btn').forEach(btn =>
         
         saveData(data);
         updateUI();
-        sendToGoogleSheets(option, 'vote', 1);
+        sendToEmail(option, 'vote', 1);
     });
 });
     
@@ -158,7 +150,7 @@ document.querySelectorAll('.star').forEach(star =>
         }
         data.ratings[option][question].push(rating);
         saveData(data);
-        sendToGoogleSheets(option, 'rating_' + question, rating);
+        sendToEmail(option, 'rating_' + question, rating);
         
         starsContainer.querySelectorAll('.star').forEach(s => 
         {
@@ -212,7 +204,7 @@ document.querySelectorAll('.undo-btn').forEach(btn =>
             data.votes[option]--;
             saveData(data);
             updateUI();
-            sendToGoogleSheets(option, 'undo_vote', 1);
+            sendToEmail(option, 'undo_vote', 1);
         }
     });
 });
