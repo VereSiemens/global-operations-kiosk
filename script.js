@@ -29,7 +29,6 @@ function sendToDiscord(data) {
     }).then(() => {
         alert('Feedback submitted! Thank you!');
         
-        // Reset feedback in data NA het versturen
         data.feedback = { 1: [], 2: [], 3: [], 4: [] };
         data.ratings = { 1: { clarity: [], findinfo: [], visual: [], usefulness: [] }, 
                          2: { clarity: [], findinfo: [], visual: [], usefulness: [] },
@@ -37,12 +36,10 @@ function sendToDiscord(data) {
                          4: { clarity: [], findinfo: [], visual: [], usefulness: [] } };
         saveData(data);
         
-        // Reset alleen de feedback textareas
         document.querySelectorAll('.feedback-text').forEach(textarea => {
             textarea.value = '';
         });
         
-        // Reset de sterren
         document.querySelectorAll('.star').forEach(star => {
             star.classList.remove('active');
         });
@@ -108,18 +105,23 @@ document.querySelectorAll('.vote-btn').forEach(btn =>
     { 
         const option = this.dataset.option;
         data.votes[option]++;
-        
-        const feedbackElement = document.querySelector(`.feedback-text[data-option="${option}"]`);
-        if (feedbackElement) {
-            const feedbackText = feedbackElement.value;
-            if (feedbackText.trim()) 
-            {
-                data.feedback[option].push(feedbackText);
-            }
-        }
-        
         saveData(data);
         updateUI();
+    });
+});
+
+document.querySelectorAll('.feedback-text').forEach(textarea => {
+    textarea.addEventListener('change', function() {
+        const option = this.getAttribute('data-option');
+        const feedbackText = this.value;
+        
+        if (feedbackText.trim()) {
+            if (!data.feedback[option]) {
+                data.feedback[option] = [];
+            }
+            data.feedback[option] = [feedbackText];
+            saveData(data);
+        }
     });
 });
     
